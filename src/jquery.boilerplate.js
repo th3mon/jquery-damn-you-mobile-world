@@ -27,6 +27,7 @@
 				this.settings = $.extend( {}, defaults, options );
 				this._defaults = defaults;
 				this._name = pluginName;
+                this.ua = navigator.userAgent;
 				this.init();
 		}
 
@@ -38,10 +39,6 @@
 						// and this.settings
 						// you can add more functions like the one below and
 						// call them like so: this.yourOtherFunction(this.element, this.settings).
-						console.log("xD");
-				},
-				yourOtherFunction: function () {
-						// some logic
 				}
 		};
 
@@ -54,5 +51,34 @@
 						}
 				});
 		};
+
+        $[ pluginName ] = (function (g, d, u){
+            var
+                ua = navigator.userAgent,
+                smartphoneMQL = {
+                    portrait: g.matchMedia("(min-width: 320px) and (max-width: 500px) and (orientation: portrait)"),
+                    landscape: g.matchMedia("(min-width: 480px) and (max-width: 640px) and (orientation: landscape)")
+                },
+
+                isSmartphone = function() {
+                    return (smartphoneMQL.portrait.matches || smartphoneMQL.landscape.matches);
+                },
+
+                isAndroid = function () {
+                    var regex = /android/ig;
+
+                    return regex.test(ua);
+                },
+
+                isAndroidOnSmartphone = function() {
+                    return isAndroid() && isSmartphone();
+                };
+
+            return {
+                isSmartphone: isSmartphone,
+                isAndroid: isAndroid,
+                isAndroidOnSmartphone: isAndroidOnSmartphone
+            };
+        }(window, document));
 
 })( jQuery, window, document );

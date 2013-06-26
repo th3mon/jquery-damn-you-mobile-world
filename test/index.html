@@ -8,9 +8,13 @@
 	<body>
 		<script>
 			$(function() {
-				$("#element").dymw({
+				$("body").dymw({
 					propertyName: "a custom value"
 				});
+
+				console.log("isSmartphone: ", $.dymw.isSmartphone());
+				console.log("isAndroid: ", $.dymw.isAndroid());
+				console.log("isAndroidOnSmartphone: ", $.dymw.isAndroidOnSmartphone());
 			});
 		</script>
 	</body>
